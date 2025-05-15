@@ -181,7 +181,7 @@ app.layout = html.Div([
     ),
 
     html.H2(
-        "Variación mensual de muertes en Colombia (2019)",
+        "Variación mensual de muertes en Colombia",
         style={'textAlign': 'center'}
     ),
     dcc.Graph(
@@ -197,7 +197,7 @@ app.layout = html.Div([
     ),
 
     html.H2(
-        "Top 5 municipios con más homicidios (2019)",
+        "Top 5 municipios con más homicidios",
         style={'textAlign': 'center'}
     ),
     dcc.Graph(
@@ -212,7 +212,7 @@ app.layout = html.Div([
     ),
 
     html.H2(
-        "10 ciudades con menor índice de mortalidad (2019)",
+        "10 ciudades con menor índice de mortalidad",
         style={'textAlign': 'center'}
     ),
     dcc.Graph(
