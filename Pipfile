@@ -5,13 +5,13 @@ verify_ssl = true
 
 [packages]
 dash = "==2.17.0"
-plotly = {version = "==5.21.0", extras = ["express"]}
 numpy = "*"
 pandas = "*"
 openpyxl = "*"
 requests = "*"
+dash-tools = "==1.12.0"
 
 [dev-packages]
 
 [requires]
-python_version = "3.13"
+python_version = "3.11"

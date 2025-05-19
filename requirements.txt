@@ -1,6 +1,6 @@
 dash==2.17.0
-plotly[express]==5.21.0
 numpy
 pandas
 openpyxl
 requests
+dash-tools==1.12.0
