@@ -19,5 +19,5 @@ Este proyecto es una aplicación web interactiva creada con Dash y Plotly que mu
 3. **Ejecutar aplicación:**
 
    ```bash
-   python app.py
+   python src/app.py
 
