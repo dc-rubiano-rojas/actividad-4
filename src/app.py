@@ -1,4 +1,4 @@
-from dash import Dash, html, dcc
+from dash import Dash, html, dcc, dash_table
 import plotly.express as px
 import pandas as pd
 import requests
@@ -149,6 +149,42 @@ menor10_municipios = (
     .head(10)
 )
 
+# =======================
+# 5 - Tabla: Primeras 10 filas del dataset
+# =======================
+tabla_head = dash_table.DataTable(
+    id='tabla-head',
+    columns=[{'name': col, 'id': col} for col in df.columns],
+    data=df.head(10).to_dict('records'),
+    page_size=10,
+    style_table={'overflowX': 'auto'}
+)
+
+# =======================
+# 6 - Histograma: Distribución de grupos de edad
+# =======================
+hist_edad = px.histogram(
+    df,
+    x='GRUPO_EDAD1',
+    nbins=10,
+    labels={'GRUPO_EDAD1': 'Grupo de edad', 'count': 'Frecuencia'},
+    title='Distribución de grupos de edad'
+)
+
+# =======================
+# 7 - Barras: Muertes por manera de muerte
+# =======================
+manera_counts = df['MANERA_MUERTE'].value_counts().reset_index(name='MUERTES')
+manera_counts.rename(columns={'index': 'MANERA_MUERTE'}, inplace=True)
+
+barras_manera = px.bar(
+    manera_counts,
+    x='MANERA_MUERTE',
+    y='MUERTES',
+    labels={'MANERA_MUERTE': 'Manera de muerte', 'MUERTES': 'Número de muertes'},
+    title='Muertes por manera de muerte'
+)
+
 # =====================
 # App Dash
 # =====================
@@ -226,6 +262,16 @@ app.layout = html.Div([
             labels={'MUNICIPIO': 'Municipio', 'MUERTES': 'Número de muertes'}
         )
     ),
+    
+    # 5,6,7 - Tabla, histograma y barras
+    html.H2('Tabla: Primeras 10 filas del dataset', style={'textAlign':'center'}),
+    tabla_head,
+
+    html.H2('Histograma de distribución de grupos de edad', style={'textAlign':'center'}),
+    dcc.Graph(id='histograma-edad', figure=hist_edad),
+
+    html.H2('Muertes por manera de muerte', style={'textAlign':'center'}),
+    dcc.Graph(id='barras-manera-muerte', figure=barras_manera),
 ])
 
 if __name__ == '__main__':
