@@ -3,17 +3,17 @@ import plotly.express as px
 import pandas as pd
 import requests
 
+# Convert Excel to CSV
+pd.read_excel('Anexo1.NoFetal2019_CE_15-03-23.xlsx').to_csv('Anexo1.csv', index=False)
+pd.read_excel('Anexo2.CodigosDeMuerte_CE_15-03-23.xlsx').to_csv('CodigosDeMuerte.csv', index=False)
+pd.read_excel('Anexo3.Divipola_CE_15-03-23.xlsx').to_csv('Divipola.csv', index=False)
+
 # Leer archivos de Excel
-archivo = 'Anexo1.NoFetal2019_CE_15-03-23.xlsx'
-df = pd.read_excel(archivo, engine='openpyxl')
+archivo = 'Anexo1.csv'
+df = pd.read_csv(archivo)
 
-archivo_codigos_muertes = 'Anexo2.CodigosDeMuerte_CE_15-03-23.xlsx'
-df_codigos = pd.read_excel(archivo_codigos_muertes)
-
-archivo_nombres = 'Anexo3.Divipola_CE_15-03-23.xlsx'
-df_codigos_departmentos_municipios = pd.read_excel(
-    archivo_nombres, engine='openpyxl'
-)
+df_codigos = pd.read_csv('CodigosDeMuerte.csv')
+df_codigos_departmentos_municipios = pd.read_csv('Divipola.csv')
 
 # =======================
 # 1 - Mapa: Muertes por departamento
