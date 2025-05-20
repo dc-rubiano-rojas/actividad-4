@@ -191,88 +191,81 @@ barras_manera = px.bar(
 app = Dash(__name__)
 server = app.server 
 
-app.layout = html.Div([
-    html.H1(
-        "Universidad de la Salle",
-        style={'textAlign': 'center'}
-    ),
+app.layout = html.Div(
+    style={
+        'backgroundColor': '#f5f5f5',  # Color de fondo general
+        'padding': '20px',
+        'margin': '20px',
+        'borderRadius': '10px',
+        'fontFamily': 'Arial, sans-serif'
+    },
+    children=[
+        html.H1('Universidad de la Salle', style={'textAlign': 'center', 'color': '#333'}),
+        html.H2('Maestría en IA', style={'textAlign': 'center', 'color': '#444'}),
+        html.H3('Daniel Rubiano Rojas', style={'textAlign': 'center', 'color': '#666'}),
+        html.H3('Nicolás Zuluaga Fontecha', style={'textAlign': 'center', 'color': '#666'}),
 
-    html.H2(
-        "Distribución de muertes por departamento en Colombia (2019)",
-        style={'textAlign': 'center'}
-    ),
-    dcc.Graph(
-        id='mapa-muertes',
-        figure=px.choropleth(
-            muertes_por_departamento,
-            geojson=geojson,
-            locations='COD_DEP',
-            color='MUERTES',
-            hover_name='DEPARTAMENTO',
-            color_continuous_scale='Reds',
-            featureidkey='properties.DPTO',
-            labels={'MUERTES': 'Muertes', 'DEPARTAMENTO': 'Departamento'},
-            title='Mapa: Total de muertes por departamento'
-        ).update_geos(fitbounds="locations", visible=False)
-        .update_layout(margin={"r": 0, "t": 50, "l": 0, "b": 0})
-    ),
+        html.H2(
+            "Distribución de muertes por departamento en Colombia (2019)",
+            style={'textAlign': 'center', 'marginTop': '40px'}
+        ),
+        dcc.Graph(
+            id='mapa-muertes',
+            figure=px.choropleth(
+                muertes_por_departamento,
+                geojson=geojson,
+                locations='COD_DEP',
+                color='MUERTES',
+                hover_name='DEPARTAMENTO',
+                color_continuous_scale='Reds',
+                featureidkey='properties.DPTO',
+                labels={'MUERTES': 'Muertes', 'DEPARTAMENTO': 'Departamento'},
+                title='Mapa: Total de muertes por departamento'
+            ).update_geos(fitbounds="locations", visible=False)
+            .update_layout(margin={"r": 0, "t": 50, "l": 0, "b": 0})
+        ),
 
-    html.H2(
-        "Variación mensual de muertes en Colombia",
-        style={'textAlign': 'center'}
-    ),
-    dcc.Graph(
-        id='lineas-mensuales',
-        figure=px.line(
+        html.H2("Variación mensual de muertes en Colombia", style={'textAlign': 'center', 'marginTop': '40px'}),
+        dcc.Graph(id='lineas-mensuales', figure=px.line(
             muertes_por_mes,
             x='NOMBRE_MES',
             y='MUERTES',
             markers=True,
             labels={'NOMBRE_MES': 'Mes', 'MUERTES': 'Número de muertes'},
             title='Total de muertes por mes en Colombia - 2019'
-        )
-    ),
+        )),
 
-    html.H2(
-        "Top 5 municipios con más homicidios",
-        style={'textAlign': 'center'}
-    ),
-    dcc.Graph(
-        id='barras-homicidios',
-        figure=px.bar(
+        html.H2("Top 5 municipios con más homicidios", style={'textAlign': 'center', 'marginTop': '40px'}),
+        dcc.Graph(id='barras-homicidios', figure=px.bar(
             top5_municipios_con_nombre,
             x='MUNICIPIO',
             y='MUERTES',
             labels={'MUNICIPIO': 'Municipio', 'HOMICIDIOS': 'Número de homicidios'},
             title='Top 5 municipios con más homicidios'
-        )
-    ),
+        )),
 
-    html.H2(
-        "10 ciudades con menor índice de mortalidad",
-        style={'textAlign': 'center'}
-    ),
-    dcc.Graph(
-        id='pie-mortalidad-baja',
-        figure=px.pie(
+        html.H2("10 ciudades con menor índice de mortalidad", style={'textAlign': 'center', 'marginTop': '40px'}),
+        dcc.Graph(id='pie-mortalidad-baja', figure=px.pie(
             menor10_municipios,
             names='MUNICIPIO',
             values='MUERTES',
             title='10 ciudades con menor índice de mortalidad',
             labels={'MUNICIPIO': 'Municipio', 'MUERTES': 'Número de muertes'}
-        )
-    ),
-    
-    # 5,6,7 - Tabla, histograma y barras
-    html.H2('Tabla: Primeras 10 filas del dataset', style={'textAlign':'center'}),
-    tabla_head,
+        )),
 
-    html.H2('Histograma de distribución de grupos de edad', style={'textAlign':'center'}),
-    dcc.Graph(id='histograma-edad', figure=hist_edad),
+        html.H2('Tabla: Primeras 10 filas del dataset', style={'textAlign': 'center', 'marginTop': '40px'}),
+        tabla_head,
 
-    html.H2('Muertes por manera de muerte', style={'textAlign':'center'}),
-    dcc.Graph(id='barras-manera-muerte', figure=barras_manera),
-])
+        html.H2('Histograma de distribución de grupos de edad', style={'textAlign': 'center', 'marginTop': '40px'}),
+        dcc.Graph(id='histograma-edad', figure=hist_edad),
+
+        html.H2('Muertes por manera de muerte', style={'textAlign': 'center', 'marginTop': '40px'}),
+        dcc.Graph(id='barras-manera-muerte', figure=barras_manera),
+        
+        html.H3('Todos los derechos reservados', style={'textAlign': 'center', 'color': '#666'}),
+    ]
+)
+
 
 if __name__ == '__main__':
     app.run_server(debug=True)
